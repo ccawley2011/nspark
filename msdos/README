@@ -34,12 +34,6 @@ Contents of this directory:
                     and optionally apply PKLITE or LZEXE by hand.)
   nspark.prj      : Borland 3.1 project file
   nspark.ide      : Borland 4 project file
-  alt/compress.c  : alternative version of compress.c (see below)
-  alt/haspragm.c  : test whether #pragma startup is supported
-                    (called by makefile).
-  alt/makefile.bor: makefile for alternative version
-  alt/nspark.prj  : Borland 3.1 project file for alternative version
-  alt/nspark.ide  : Borland 4 project file for alternative version
 
 Compilation/porting:
   The current version has been compiled with Borland C/C++
@@ -146,22 +140,6 @@ Compilation/porting:
       BB_HUGE_STATIC_ARRAYS defined. (See compress.c). Compression
       afterwards with e.g. PKLITE or LZEXE is highly recommended in
       this case.
-
-      To correspond more to the unix way of dynamically allocating
-      static arrays, there is an alternative form of compress.c
-      in the directory alt. In that version the memory is allocated
-      by a function that is called before main() itself by using
-      #pragma startup. I do not expect that all compilers support
-      this pragma, so I added it as an alternative. The program
-      haspragm.c is compiled and called in the accompanying makefile
-      to verify that this pragma really is present.
-      The advantage of this approach is that a lack of memory is
-      spotted before anything else happens. Otherwise the program
-      may already have produced some output before it spots
-      the lack of memory. This can be confusing for the user.
-
-      The executable supplied is compiled with this alternative
-      form.
 
     32 bits & protected mode.
       The present version is a 16 bit version. It should run on
