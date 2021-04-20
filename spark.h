@@ -124,7 +124,7 @@ typedef enum {NOEXIST, ISFILE, ISDIR } Ftype;
 /*
  * un-archiving status
  */
-typedef enum {NOERR, RERR, WERR, CRCERR } Status;
+typedef enum {NOERR, RERR, WERR, CRCERR, MEMERR, INVERR } Status;
 
 /*
  * compressed file header

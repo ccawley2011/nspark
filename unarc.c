@@ -519,18 +519,15 @@ do_unarc()
 
 			/*
 			 * check if unarchiving failed.
-			 * (RERR check is not in switch() because `break'
 			 * needs to escape from while())
 			 */
-			if (status == RERR)
+			switch (status)
 			{
+			case RERR:
 				if (!quiet)
 					error("error reading archive");
 				ret = 3;
 				break;
-			}
-			switch (status)
-			{
 			case WERR:
 				if (!quiet)
 					msg("error writing file");
@@ -546,6 +543,14 @@ do_unarc()
 #else
 				debug("  calculated CRC=0X%X", crc);
 #endif							/* __MSDOS__ */
+				break;
+			case MEMERR:
+				if (!quiet)
+					msg("out of memory");
+				break;
+			case INVERR:
+				if (!quiet)
+					msg("corrupt or garbled");
 				break;
 			case NOERR:
 				if (!testing && !to_stdout && stamp)

@@ -209,8 +209,7 @@ uncompress(Header *header, FILE *ifp, FILE *ofp, CompType type)
 											  sizeof(unsigned short));
 	if (!htab || !codetab)
 	{
-		error("%s: uncompress: out of memory", ourname);
-		exit(1);
+		return MEMERR;
 	}
 #endif							/* ! BB_HUGE_STATIC_ARRAYS */
 
@@ -308,16 +307,14 @@ uncompress(Header *header, FILE *ifp, FILE *ofp, CompType type)
 		{
 			if ((char NSHUGE *)(stackp+1) > (char NSHUGE *)(&htab[0] + HSIZE))
 			{
-				error("%s: uncompress: corrupt or garbled archive file", ourname);
-				exit(1);
+				return INVERR;
 			}
 			*stackp++ = tab_suffixof(code);
 			code = tab_prefixof(code);
 		}
 		if ((char NSHUGE *)(stackp+1) > (char NSHUGE *)(&htab[0] + HSIZE))
 		{
-			error("%s: uncompress: corrupt or garbled archive file", ourname);
-			exit(1);
+			return INVERR;
 		}
 		/* BB changed next line for Borland C/C++ 4 */
 		/* *stackp++ = finchar = tab_suffixof(code); */
